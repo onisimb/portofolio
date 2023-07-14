@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>CatPhotoApp</title>
+    <!-- Below we have  the block that is controlling the like-button / the layout style by using CSS-->
+    <style>
+      .image-container {
+        position: relative;
+        display: inline-block;
+        }
+
+      .like-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #ffffff9d;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+          }
+
+      .like-count {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        font-size: 14px;
+          }
+      .flex-container {
+        display: flex;
+        }
+      .section-container {
+        margin-right: 20px;
+          }
+      body {background-color: #968573}
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>CatPhotoApp</h1>
+      <!-- The app body, buttons, text and image sources. -->
+      <div class="flex-container">
+        <section class="section-container">
+          <h2>Cat Photos</h2>
+          <p>See more <a target="_blank" href="https://freecatphotoapp.com">cat photos</a> in our gallery.</p>
+          <a href="https://freecatphotoapp.com"><img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
+        </section>
+        <section> 
+          <h2>Cat Lists</h2>
+          <h3>Things cats love:</h3>
+          <ul>
+            <li>cat nip</li>
+            <li>laser pointers</li>
+            <li>lasagna</li>
+          </ul>
+          <figure>
+            <img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/lasagna.jpg" alt="A slice of lasagna on a plate.">
+            <figcaption>Cats <em>love</em> lasagna.</figcaption>  
+          </figure>
+        </section>
+      </div>  
+      <section>
+        <h3>Top 3 things cats hate:</h3>
+        <ol>
+          <li>flea treatment</li>
+          <li>thunder</li>
+          <li>other cats</li>
+        </ol>
+        <figure>
+          <img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/cats.jpg" alt="Five cats looking around a field.">
+          <figcaption>Cats <strong>hate</strong> other cats.</figcaption>  
+        </figure>
+        <!-- creating a clikable random button to show cat pictures by using javascript for a better interaction-->
+        <div class="image-container">
+          <button id="randomCats">Click for a Random cat picture</button>
+          <img id="catImage" src="https://pixabay.com/images/search/cats/" alt="Random Cat" width="400">
+          <script>
+            const catButton = document.getElementById('randomCats');
+            const catImage = document.getElementById('catImage');
+            catButton.addEventListener('click', () => {
+              fetch('https://api.thecatapi.com/v1/images/search')
+                .then(response => response.json())
+                .then(data => {
+                  const imageUrl = data[0].url;
+                  catImage.src = imageUrl;
+                })
+                .catch(error => {
+                  console.log('Error:', error);
+                });
+            });
+          </script>
+          <!-- Like-button block html and javascript-->
+          <button class="like-button">Likes</button>
+          <span class="like-count">0</span>
+        </div>
+        <script>
+          const likeButtons = document.querySelectorAll('.like-button');
+          likeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+              const likeCount = button.nextElementSibling;
+              let count = parseInt(likeCount.textContent);
+              count++;
+              likeCount.textContent = count;
+            });
+          });
+        </script>
+      </section>  
+      <!-- Cat form questionnaire -->
+      <section>
+        <h2>Cat Form</h2>
+        <form action="https://freecatphotoapp.com/submit-cat-photo">
+          <fieldset>
+            <legend>Is your cat an indoor or outdoor cat?</legend>
+            <label><input id="indoor" type="radio" name="indoor-outdoor" value="indoor" checked> Indoor</label>
+            <label><input id="outdoor" type="radio" name="indoor-outdoor" value="outdoor"> Outdoor</label>
+          </fieldset>
+          <fieldset>
+            <legend>What's your cat's personality?</legend>
+            <input id="loving" type="checkbox" name="personality" value="loving" checked> <label for="loving">Loving</label>
+            <input id="lazy" type="checkbox" name="personality" value="lazy"> <label for="lazy">Lazy</label>
+            <input id="energetic" type="checkbox" name="personality" value="energetic"> <label for="energetic">Energetic</label>
+          </fieldset>
+          <input type="text" name="catphotourl" placeholder="cat photo URL" required>
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <p>
+        No Copyright - <a href="https://www.freecodecamp.org">freeCodeCamp.org</a>
+      </p>
+    </footer>
+  </body>
+</html>
+
+<!-- References:
+1 - www.freecodecamp.org
+2 - https://pixabay.com/images/search/cats/ - to access free cat pictures from their platform
+3 - https://www.digitalocean.com/community/tutorials/how-to-add-javascript-to-html
+4 - https://stackoverflow.com/questions/14674296/how-to-create-a-simple-like-button
+5 - https://www.javatpoint.com/how-to-add-like-button-in-html-and-css
+-->
