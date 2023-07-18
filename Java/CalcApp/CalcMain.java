@@ -33,4 +33,4 @@ public class CalcMain {
 }
 
 // Reference:
-// 1 - Created with Sparta global Java Fundamentals course
+// 1 - Created with Sparta global Java Fundamentals course.
